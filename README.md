@@ -118,7 +118,6 @@ Instructions, targeted references, portable interchange examples, and small vali
 
 - [Artifact contract](docs/artifacts.md): portable evidence and experiment records.
 - [Development and validation](CONTRIBUTING.md): tests and contribution expectations.
-- [Sources and acknowledgments](ACKNOWLEDGMENTS.md): methodological influences and integration references.
 
 The banner's [static PNG](assets/eval-skills-banner.png) is available separately. Its animated wrapper respects reduced-motion preferences.
 
