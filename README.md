@@ -103,7 +103,7 @@ The same process works across three setups. Choose after inspecting a real execu
 
 | Track | What you get | What you maintain |
 | --- | --- | --- |
-| **Managed** | Shared tracing, review, annotation, datasets, and experiment history through [Confident AI](skills/eval-start/references/managed.md) | Your application and domain-specific quality decisions |
+| **Fully managed** | Shared tracing, review, annotation, datasets, and experiment history through [Confident AI](skills/eval-start/references/managed.md), saving agent tokens on custom tooling and making evals simpler to run | Your application and domain-specific quality decisions |
 | **Local, managed graders** | An AI-built review UI and local artifacts, with ready-made graders from [DeepEval](skills/eval-grade/references/deepeval.md) | Local UI, runner, storage, and grader configuration |
 | **Fully local, build from scratch** | An AI-built review UI, code checks, and custom or existing judges | Local UI, runner, storage, and graders |
 
