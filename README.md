@@ -8,7 +8,22 @@ Skills for coding agents that guide you from your first inspectable AI execution
 
 Start with your application's stage, not a metric catalog. Reuse the traces, datasets, evaluators, and review tools you already have. The first useful outcome is one real execution you can understand—not an account setup or a dashboard project.
 
-## Where are you starting?
+## Who this is for
+
+**For:** individual builders and product teams developing AI applications, from a first prototype to a production system. Use these skills with a coding agent to understand failures, build meaningful checks, and measure whether changes help. Bring your existing traces, datasets, and evals, or start with one real execution.
+
+**Not for:** training foundation models, running general model leaderboards, or getting a universal quality score without reviewing application behavior. The workflow needs someone who can judge what a good outcome means for the product; an agent can organize the evidence and implement checks, but cannot supply that judgment for you.
+
+## The evaluation workflow
+
+Designed for an individual quickstart, this workflow also scales to team review and shared evaluation work through the [fully managed route below](#choose-how-the-workflow-runs). Start with one AI feature and enter at the first missing piece. Reuse trustworthy evidence instead of repeating completed stages.
+
+- **Inspect evidence:** check what you already have—production traffic, traces, datasets, and evals. Capture one real execution if needed, and make its behavior understandable.
+- **Review examples:** sample realistic cases and record human observations about what failed and why it matters.
+- **Analyze errors:** group annotations into failure modes, refine them with a reviewer, and prioritize problems using their frequency and impact.
+- **Build trusted evals:** curate reusable cases, validate graders against human judgment, and establish a reproducible baseline.
+- **Run Descent:** test one improvement hypothesis at a time, check for regressions, and keep or revert the change based on evidence.
+- **Maintain:** catch regressions and feed new production failures back into review.
 
 [![From evidence to better AI: a stage-based entry guide and six-step evaluation workflow, from inspecting evidence through review, error analysis, trusted evals, Descent, and maintenance.](assets/eval-workflow-poster.png)](assets/eval-workflow-poster.png)
 
