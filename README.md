@@ -8,6 +8,9 @@ Skills for coding agents that guide you from your first inspectable AI execution
 
 Start with your application's stage, not a metric catalog. Reuse the traces, datasets, evaluators, and review tools you already have. The first useful outcome is one real execution you can understand—not an account setup or a dashboard project.
 
+> [!NOTE]
+> This guide defaults to **Jev** for supported model-based graders in the **local, managed graders** route. The agent confirms your judging-mode preference before setup. You can choose another judge or bring your own; see the [judging setup](skills/eval-grade/references/deepeval.md).
+
 ## Who this is for
 
 - **Product managers and domain experts** reviewing real examples and defining what good behavior means for users.
