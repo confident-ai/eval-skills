@@ -4,7 +4,7 @@
 
 Inspect the app and existing artifacts before asking for information discoverable in code. Establish one feature, its input shape, its intended outcome, and the environment in which it can be safely replayed. A conversation, attachment, or starting workspace is part of an input when the app needs it.
 
-Record decisions in the project's existing eval notes, or `.eval/<flow>/workflow.json`: stage, track, task, source locations, permitted data use, artifact locations, owner of human labels, completed milestones, next action, and any approved run scope. Never store credentials. Reuse these decisions across sessions; do not repeat onboarding.
+Record decisions in the project's existing eval notes, or `.eval/<flow>/workflow.json` (the default flow is `default`; use the same root for every skill): stage, track, task, source locations, permitted data use, artifact locations, owner of human labels, completed milestones, next action, and any approved run scope. Never store credentials. Reuse these decisions across sessions; do not repeat onboarding.
 
 A stage is complete when its evidence exists, not when a checklist was recited. If blocked, finish independent preparation and identify the concrete missing dependency. Never claim a paid run, human review, or hosted connection happened without verifying it.
 

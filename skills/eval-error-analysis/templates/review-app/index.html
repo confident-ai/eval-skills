@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="session-token" content="__SESSION_TOKEN__">
+  <title>Trace Review</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Trace Review <span id="mode-badge" class="badge"></span></div>
+    <nav class="tabs" aria-label="Views">
+      <button type="button" data-view="review" class="tab active">Review</button>
+      <button type="button" data-view="progress" class="tab">Progress</button>
+    </nav>
+    <div id="counter" class="counter" aria-live="polite"></div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <main id="view-review" class="layout">
+    <section class="trace" aria-label="Trace">
+      <div id="trace-header" class="trace-header"></div>
+      <div id="trace-body"></div>
+    </section>
+    <aside class="panel" aria-label="Annotation">
+      <div id="verdict-group" class="verdicts" role="group" aria-label="Verdict">
+        <button type="button" data-verdict="pass" class="verdict pass">Pass <kbd>1</kbd></button>
+        <button type="button" data-verdict="fail" class="verdict fail">Fail <kbd>2</kbd></button>
+        <button type="button" data-verdict="defer" class="verdict defer">Defer <kbd>3</kbd></button>
+      </div>
+      <div id="label-group" class="labels" hidden></div>
+      <label for="note" class="note-label">Notes: what went wrong (or right)?</label>
+      <label for="reviewer">Reviewer name</label><input id="reviewer" autocomplete="name" placeholder="Your name" />
+      <textarea id="note" rows="10" placeholder="Describe what you see in plain words. First failure you notice is enough."></textarea>
+      <div id="save-status" class="save-status" aria-live="polite"></div>
+      <div class="nav">
+        <button type="button" id="prev">← Prev</button>
+        <button type="button" id="next">Next →</button>
+      </div>
+      <details class="help">
+        <summary>Keyboard shortcuts</summary>
+        <ul>
+          <li><kbd>←</kbd>/<kbd>→</kbd> or <kbd>k</kbd>/<kbd>j</kbd>: previous / next trace</li>
+          <li><kbd>1</kbd> pass, <kbd>2</kbd> fail, <kbd>3</kbd> defer</li>
+          <li><kbd>n</kbd>: focus notes · <kbd>Esc</kbd>: leave notes</li>
+          <li><kbd>u</kbd>: next unreviewed trace</li>
+          <li>Label mode: <kbd>1</kbd> pass / <kbd>2</kbd> fail for the highlighted failure mode, <kbd>[</kbd>/<kbd>]</kbd> to move between modes</li>
+        </ul>
+      </details>
+    </aside>
+  </main>
+
+  <main id="view-progress" class="progress" hidden>
+    <section>
+      <h2>Coverage</h2>
+      <div id="stats" class="stats"></div>
+    </section>
+    <section>
+      <h2>Failure modes</h2>
+      <p class="muted">Maintained by your coding agent from your notes. Click an example to open it.</p>
+      <div id="modes"></div><section id="taxonomy-controls"></section><p><a href="/api/export" download="review-export.json">Export review and taxonomy</a></p>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

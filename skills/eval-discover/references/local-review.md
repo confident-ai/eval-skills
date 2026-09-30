@@ -4,9 +4,9 @@ Use this only after a local track is chosen. The goal is human understanding and
 
 ## Smallest useful architecture
 
-Default to a local Python standard-library HTTP server, a single HTML/JavaScript interface, and SQLite for durable annotation writes. Bind to loopback. Keep sampling and taxonomy updates in separate scripts or agent actions; the UI reads records and saves review state. An established project stack is also appropriate.
+Start from the bundled Python or Node standard-library server and HTML/JavaScript scaffold. It stores annotations and taxonomy revisions in atomically replaced JSON files. Bind to loopback. Keep sampling and taxonomy updates in separate scripts or agent actions; the UI reads records and saves review state. An established project stack is also appropriate.
 
-Support three operations: read a paginated/filterable record set; read annotations and taxonomy revisions; save one annotation with stable IDs and revision checks. Use generated internal IDs, not request-supplied filesystem paths. Validate body size/types, allow known record IDs only, and reject stale revisions to avoid overwriting edits. Restrict writes to the local origin. Do not expose the server publicly without an explicitly scoped deployment design.
+The bundled API supports read, annotation, taxonomy, and export operations. Preserve these contracts when customizing. Support: read a paginated/filterable record set; read annotations and taxonomy revisions; save one annotation with stable IDs and revision checks. Use generated internal IDs, not request-supplied filesystem paths. Validate body size/types, allow known record IDs only, and reject stale revisions to avoid overwriting edits. Restrict writes to the local origin. Do not expose the server publicly without an explicitly scoped deployment design.
 
 Store the original data separately from annotations. Suggested annotations carry their origin and cannot become confirmed without a human action. Save pending edits immediately and show failure/retry state. A browser reload must recover saved state. Provide a documented start/stop command and export function.
 

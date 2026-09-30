@@ -4,12 +4,15 @@ description: Maintain trusted AI evaluations through CI regression checks, produ
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Keep evaluation useful after the first run
 
 Read [the operating agreement](references/workflow.md), [maintenance guide](references/maintenance.md), and [managed workflows](references/managed.md) when applicable.
+
+For bundled local tools and exact commands, read [toolkit setup](references/toolkit.md). Run [the workspace installer](scripts/setup_workspace.py) for this skill; it preserves existing customized files.
+For the managed route, use [concrete service operations](references/api-managed.md) after confirming the connected schema.
 
 ## Establish ownership
 

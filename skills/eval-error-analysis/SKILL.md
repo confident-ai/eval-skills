@@ -4,12 +4,15 @@ description: Cluster human review annotations into evidence-linked failure modes
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Turn annotations into failure modes
 
 Read [the operating agreement](references/workflow.md) and [analysis procedure and artifacts](references/error-analysis.md). For local work, use [local review guidance](references/local-review.md); for an existing managed workflow, use [managed guidance](references/managed.md).
+
+For bundled local tools and exact commands, read [toolkit setup](references/toolkit.md). Run [the workspace installer](scripts/setup_workspace.py) for this skill; it preserves existing customized files.
+For the managed route, use [concrete service operations](references/api-managed.md) after confirming the connected schema.
 
 ## Start from reviewed evidence
 

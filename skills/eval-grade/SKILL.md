@@ -4,12 +4,15 @@ description: Implement and calibrate failure-specific AI evaluators against expe
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Build and validate graders
 
 Read [the operating agreement](references/workflow.md) and [calibration](references/calibration.md). Use [managed grading](references/managed.md) for Confident AI, [DeepEval integration](references/deepeval.md) only for that local track, or [other graders](references/other-graders.md).
+
+For bundled local tools and exact commands, read [toolkit setup](references/toolkit.md). Run [the workspace installer](scripts/setup_workspace.py) for this skill; it preserves existing customized files.
+For the managed route, use [concrete service operations](references/api-managed.md) after confirming the connected schema.
 
 ## Establish the claim
 

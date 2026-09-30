@@ -1,63 +1,9 @@
-# First-trace recipes
+# Capture the first trace
 
-Use the existing app runtime and dependency manager. Inspect installed confident-trace versions and current [Python](https://github.com/confident-ai/confident-trace/tree/main/python) or [TypeScript](https://github.com/confident-ai/confident-trace/tree/main/typescript) docs before adapting a recipe. Do not force installation when existing logs already provide adequate evidence.
+Use the bundled Python/TypeScript local OTLP exporters and normalizers described in [toolkit setup](toolkit.md). Both retain original spans for replay and produce normalized records for review. Reuse existing adequate traces instead of adding another SDK unnecessarily.
 
-## Local Python capture with no hosted export
+Default to local capture. `EVAL_SKILLS_TRACE_MODE=confident` explicitly selects hosted export; an API key alone must not switch destinations. Configure redaction before capturing user content. Inspect one real input, output, tool hierarchy, model identity, timing, and available usage before connecting a new managed destination.
 
-A supported custom exporter can keep first evidence local. This example uses the OTel console exporter as a JSON-record stream. Its output is not JSONL; preserve it as the original export or parse it with an explicit adapter.
+For Python, install confident-trace in the app's environment, put `eval_tracing.py` and `local_exporter.py` on its import path, and call `setup_tracing()` before provider imports. Flush/shutdown before reading exports. For TypeScript, use the bundled setup module and the supported `--import confident-trace/register` preload when automatic instrumentation requires it.
 
-```python
-from pathlib import Path
-from opentelemetry.sdk.trace.export import ConsoleSpanExporter
-import confident_trace as ct
-
-# Adapt the import to the actual application. Run with a non-sensitive example.
-with Path("first-trace.jsonstream").open("w") as stream:
-    ct.init(exporter=ConsoleSpanExporter(out=stream))
-    from app import run_agent  # Import after initialization where hooks require it.
-    try:
-        with ct.span("first-eval", type="agent", input="A representative request"):
-            output = run_agent("A representative request")
-            ct.update_trace(input="A representative request", output=output)
-    finally:
-        ct.shutdown()  # Flush while the file remains open.
-```
-
-The app import is illustrative, not a runnable universal entrypoint. Initialize before provider aliases are cached where an integration needs that. If the app already owns a global OTel provider, attach a local processor through that provider's supported lifecycle instead of replacing it. Verify actual spans; an init call alone does not prove instrumentation worked.
-
-## Local TypeScript capture
-
-With supported Node and SDK versions, inject a local exporter:
-
-```typescript
-import { init } from "confident-trace";
-import { InMemorySpanExporter } from "@opentelemetry/sdk-trace-base";
-import { writeFile } from "node:fs/promises";
-
-const exporter = new InMemorySpanExporter();
-const tracing = init({ exporter });
-// Invoke the actual application here; await all work and close streams.
-await tracing.flush();
-const records = exporter.getFinishedSpans().map(span => ({
-  name: span.name,
-  context: span.spanContext(),
-  parent: span.parentSpanContext,
-  attributes: span.attributes,
-  events: span.events,
-  status: span.status,
-  startTime: span.startTime,
-  endTime: span.endTime,
-}));
-await writeFile("first-trace.json", JSON.stringify(records, null, 2));
-await tracing.shutdown();
-```
-
-For automatic instrumentation launch the app with the documented `node --import confident-trace/register ...` preload as well as calling `init()`. Adapt the projection to retain parent identity from the installed OTel version. In an existing provider, use its processor/flush lifecycle. In bundled apps, use documented manual adapters when the preload cannot intercept bundled imports. Never treat an empty exported array as a successful first trace.
-
-## Connect after inspection
-
-Configure `CONFIDENT_API_KEY` in the environment. Use the documented `CONFIDENT_OTEL_ENDPOINT` for a non-default region or collector; do not guess regional endpoints. Switch the local-only exporter to the supported hosted configuration after the user selects managed. Keep credentials out of saved traces and code.
-
-Inspect content policy before exporting. Default capture limits can truncate long prompts and tool output; third-party spans can have separate redaction rules. Retain necessary larger artifacts through approved local references or platform attachments, not invented inline fields.
-
-Check one request for matching input/output, correct hierarchy, tool activity, model metadata, nonzero measured duration, and usage when the provider returns it. Token omissions and binary omissions should be declared. No trace API exposes hidden model reasoning that was not returned.
+Inspect the installed SDK and [integration reference](integrations.md) before modifying an existing OpenTelemetry provider. Empty or incomplete exports are not success. Preserve truncation indicators and missing usage as unknown. The bundled replay CLI has a dry-run mode; uploading production content requires the selected destination and permitted data use.

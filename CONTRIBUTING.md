@@ -38,3 +38,27 @@ Changes to public interchange fields must increment their schema version or rema
 Generate original romantic-pointillist artwork using the reference family described in `assets/README.md`. Do not replace raster art with a procedural approximation. Run `node scripts/create-banner.mjs` after updating the PNG, inspect the README banner, and verify reduced-motion behavior.
 
 Contributions are licensed under Apache-2.0. Credit external material and preserve any required notices. Do not copy proprietary instructions or introduce customer content, credentials, or unlicensed assets.
+
+
+## Runnable toolkit checks
+
+Shared review scaffolds, group splitting helpers, and workspace installers are synchronized by `scripts/sync_references.py`; edit the canonical resource, then synchronize. Keep ten public skills, all with the `eval-` prefix. The README stays neutral across the three routes, uses the existing posters, and limits vendor links to the established mentions. Do not add a second public review-UI or calibration skill.
+
+Run the structural check and existing unittest suite, plus:
+
+```bash
+pip install -r tests/toolkit/requirements.txt
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 DEEPEVAL_TELEMETRY_OPT_OUT=1 python -m pytest tests/toolkit -q
+cd tests/toolkit/ts
+npm ci
+npm run typecheck
+npm test
+```
+
+From the repository root, run `python examples/toolkit_smoke.py --output /new/scratch/directory` for the credential-free journey. It uses an explicitly synthetic review fixture; it does not claim that a real reviewer approved labels.
+
+Browser acceptance covers both review servers: notes survive reload; uncertain labels remain uncertain; a stale write gets a conflict; category confirmation leaves memberships suggested; merge/split retains history; reassignments preserve evidence; export reopens with the same IDs; trace text cannot execute. Inspect the browser, not just the generated HTML. Managed writes and paid judge calibration require their own scoped verification and must not be inferred from offline tests.
+
+Run the checked-in browser journey with `node tests/browser/review.mjs`. Install Playwright separately (including its Chromium browser), or set `PLAYWRIGHT_MODULE` to its module path and `CHROME_PATH` to a local Chrome executable. Set `PYTHON` if the Python executable is not `python3`. This script exercises both server implementations on loopback ports 18870–18871 and leaves screenshots in its temporary fixture directories.
+
+The TypeScript test lockfile pins a patched protobuf dependency. Upstream grading SDK dependencies still have moderate npm advisories; these are development/test dependencies here. Recheck the dependency tree before adopting SDKs into an application, and do not treat offline tests as hosted SDK compatibility verification.

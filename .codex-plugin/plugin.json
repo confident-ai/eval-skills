@@ -1,0 +1,32 @@
+{
+  "name": "eval-skills",
+  "version": "1.1.0",
+  "description": "Skills that take a coding agent from your first trace to evals you can trust: error analysis, datasets, validated graders, eval runs, and production monitoring.",
+  "author": {
+    "name": "Confident AI"
+  },
+  "homepage": "https://github.com/confident-ai/codex-eval-skills",
+  "repository": "https://github.com/confident-ai/codex-eval-skills",
+  "license": "Apache-2.0",
+  "keywords": [
+    "evals",
+    "llm-evaluation",
+    "error-analysis",
+    "llm-as-a-judge",
+    "tracing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Eval Skills",
+    "shortDescription": "From first trace to evals you can trust.",
+    "longDescription": "Stage-aware eval workflow for AI apps: tracing, error analysis, datasets, validated graders, eval runs, improvement loops, and production monitoring.",
+    "developerName": "Confident AI",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Help me set up evals for my AI app.",
+      "Find the failure modes in my app's traces.",
+      "Audit my existing eval pipeline."
+    ]
+  }
+}

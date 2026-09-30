@@ -4,12 +4,14 @@ description: Improve an AI application through bounded, evidence-linked experime
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Descent: reduce failures through bounded experiments
 
 Read [the operating agreement](references/workflow.md), [experiment design](references/experiments.md), and [execution requirements](references/execution.md). Use [managed workflow guidance](references/managed.md) when selected.
+
+For bundled local tools and exact commands, read [toolkit setup](references/toolkit.md). Run [the workspace installer](scripts/setup_workspace.py) for this skill; it preserves existing customized files.
 
 ## Agree on the loop
 

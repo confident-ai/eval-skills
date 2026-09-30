@@ -47,7 +47,14 @@ Install the suite with the Skills CLI:
 npx skills add https://github.com/confident-ai/codex-eval-skills
 ```
 
-Or install from a local checkout before publication:
+Claude Code users can also install the repository as a plugin:
+
+```text
+/plugin marketplace add confident-ai/codex-eval-skills
+/plugin install eval-skills@eval-skills
+```
+
+Or install from a local checkout:
 
 ```bash
 npx skills add /absolute/path/to/eval-skills
@@ -114,8 +121,10 @@ Setup instructions and judging-mode choices live in the skills. Local refers to 
 
 ## What this repository provides
 
-Instructions, targeted references, portable interchange examples, and small validation helpers. It does not ship a dashboard, require an eval framework, or promise automatic domain expertise. Most of the work is discovering and understanding failures; grader integration is one part of that process.
+Instructions, reusable local review scaffolds, Python and TypeScript tracing and runner templates, grader calibration tools, and portable interchange examples. The agent adapts these to your application; human reviewers still define quality. Most of the work is discovering and understanding failures; grader integration is one part of that process.
 
+- [Runnable toolkit](docs/toolkit.md): setup, review, grading, runs, and exports.
+- [Migration notes](docs/migration.md): workspace layout and compatibility.
 - [Artifact contract](docs/artifacts.md): portable evidence and experiment records.
 - [Development and validation](CONTRIBUTING.md): tests and contribution expectations.
 

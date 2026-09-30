@@ -4,12 +4,14 @@ description: Audit existing AI evaluation evidence, graders, datasets, and run r
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Audit an existing evaluation
 
 Read [the operating agreement](references/workflow.md). Inspect artifacts; do not produce findings from a checklist alone.
+
+For bundled local tools and exact commands, read [toolkit setup](references/toolkit.md). Run [the workspace installer](scripts/setup_workspace.py) for this skill; it preserves existing customized files.
 
 ## Gather evidence
 

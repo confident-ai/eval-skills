@@ -4,12 +4,15 @@ description: Run an AI application against reviewed cases with validated graders
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Run a reproducible evaluation
 
 Read [the operating agreement](references/workflow.md), [execution requirements](references/execution.md), and [portable artifacts](references/artifacts.md). For hosted runs read [managed guidance](references/managed.md).
+
+For bundled local tools and exact commands, read [toolkit setup](references/toolkit.md). Run [the workspace installer](scripts/setup_workspace.py) for this skill; it preserves existing customized files.
+For the managed route, use [concrete service operations](references/api-managed.md) after confirming the connected schema.
 
 ## Prepare
 

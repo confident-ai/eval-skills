@@ -2,6 +2,7 @@
 import argparse
 import ast
 import json
+import os
 import re
 import struct
 import sys
@@ -12,6 +13,13 @@ from sync_references import EXTRA, sync
 
 ROOT = Path(__file__).resolve().parents[1]
 
+
+def files(pattern):
+    for base, dirs, names in os.walk(ROOT):
+        dirs[:] = [d for d in dirs if d not in {'.git','node_modules','.tmp','.venv','__pycache__','.pytest_cache'}]
+        for name in names:
+            path=Path(base)/name
+            if path.match(pattern):yield path
 
 def validate(require_artwork=True):
     errors = []
@@ -37,7 +45,7 @@ def validate(require_artwork=True):
                 target = (md.parent / link.split('#')[0]).resolve()
                 check(target.is_relative_to(folder.resolve()), f'{md}: link escapes installed skill: {link}')
                 check(target.exists(), f'{md}: broken link: {link}')
-    for path in ROOT.rglob('*.py'):
+    for path in files('*.py'):
         if '.git' not in path.parts:
             try:
                 ast.parse(path.read_text(), filename=str(path))
@@ -46,12 +54,12 @@ def validate(require_artwork=True):
     # Catch unmistakable credential material without echoing potential secrets.
     secret_patterns = [r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
                        r"(?:sk-proj-|sk-ant-api|ghp_)[A-Za-z0-9_-]{24,}"]
-    for path in ROOT.rglob('*'):
+    for path in files('*'):
         if path.is_file() and path.suffix in ('.md', '.py', '.json', '.jsonl', '.yml', '.yaml'):
             text = path.read_text()
             check(not any(re.search(pattern, text) for pattern in secret_patterns),
                   f'{path.relative_to(ROOT)}: possible credential material')
-    for path in ROOT.rglob('*.jsonl'):
+    for path in files('*.jsonl'):
         for n, line in enumerate(path.read_text().splitlines(), 1):
             if line.strip():
                 try:
@@ -65,6 +73,15 @@ def validate(require_artwork=True):
             if not require_artwork and link.startswith('assets/'):
                 continue
             check((md.parent / link.split('#')[0]).exists(), f'{md.name}: broken link {link}')
+    for rel in ('.claude-plugin/plugin.json','.codex-plugin/plugin.json','.cursor-plugin/plugin.json'):
+        manifest=json.loads((ROOT/rel).read_text())
+        check(manifest['name']=='eval-skills', f'{rel}: unexpected plugin name')
+        check(manifest['repository']=='https://github.com/confident-ai/codex-eval-skills', f'{rel}: stale repository URL')
+        check(manifest['skills']=='./skills/', f'{rel}: wrong skills directory')
+    check(set(EXTRA)=={p.name for p in (ROOT/'skills').iterdir() if p.is_dir()}, 'Unexpected public skills')
+    readme=(ROOT/'README.md').read_text()
+    check(readme.count('[Confident AI]')<=1 and readme.count('[DeepEval]')<=1, 'Keep README vendor mentions limited')
+    check(not (ROOT/'ACKNOWLEDGMENTS.md').exists(), 'Removed acknowledgments must not return')
     if require_artwork:
         png = ROOT / 'assets/eval-skills-banner.png'
         svg = ROOT / 'assets/eval-skills-banner-radial-4s.svg'

@@ -4,12 +4,14 @@ description: Find realistic AI application examples and conduct human-led trace 
 license: Apache-2.0
 metadata:
   author: Confident AI
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Discover failures with a human
 
 Read [the operating agreement](references/workflow.md), [data sourcing](references/data-sourcing.md), and the selected surface: [managed](references/managed.md) or [local review](references/local-review.md).
+
+For bundled local tools and exact commands, read [toolkit setup](references/toolkit.md). Run [the workspace installer](scripts/setup_workspace.py) for this skill; it preserves existing customized files.
 
 ## Assemble evidence
 
