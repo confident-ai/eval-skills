@@ -1,0 +1,29 @@
+Use case: infographic-diagram.
+Create an original, publication-quality landscape educational poster for the open-source project "Eval Skills", approximately 3:2 aspect ratio, high resolution. This is a standalone readable workflow map for AI application evaluation, to replace a dense Mermaid diagram in a GitHub README. No vendor logos or vendor names. Do not reproduce any existing course diagram.
+
+Art direction: sophisticated editorial information design, warm ivory paper, deep midnight navy typography, restrained teal and ochre accents. Elegant large serif headline paired with extremely legible sans-serif supporting text. Fine rules, precise spacing, abundant breathing room. Subtle romantic pointillist celestial landscape only in the header margins and footer, connecting aesthetically to a star-atlas illustration; diagram area clean and flat. No decorative dashboards, robot clip art, 3D objects, tiny text, rainbow boxes or excessive ornament. The information architecture must be instantly clear.
+
+Title text exactly: "From evidence to better AI"
+Small eyebrow: "EVAL SKILLS / FIELD GUIDE 01"
+Subtitle: "Start at your current stage. Build trust before optimizing."
+
+Top section heading: "WHERE ARE YOU STARTING?"
+A clean full-width two-row entry guide, each of five evenly spaced columns has a question and a compact answer below. Keep each question and its answer together:
+1 "In production?" / "Use real traffic and incidents. Otherwise, start with a runnable prototype."
+2 "Already tracing?" / "Inspect a real trace. If none exists, capture one locally."
+3 "Have a dataset?" / "Audit coverage and provenance. Fill gaps with realistic cases."
+4 "Have review notes?" / "Analyze existing annotations. Otherwise, review examples first."
+5 "Already have evals?" / "Validate the graders and baseline. Reuse what you can trust."
+Below these columns a narrow line of text: "Enter at the first missing piece; skip stages supported by trustworthy evidence."
+
+Main section heading: "THE EVALUATION WORKFLOW"
+Six generous numbered stages arranged as two rows of three. The top row runs left to right 01 -> 02 -> 03. A clear arrow from 03 goes down to 04 directly below 03. The bottom row runs right to left 04 -> 05 -> 06 (therefore bottom left is 06, bottom middle 05, bottom right 04). Large step numbers and distinct small original line icons. Each contains a bold heading and only the supplied short copy:
+01 "Inspect evidence" / "Read inputs, outputs, tools and context." / small footer "A trace you can explain"
+02 "Review examples" / "Collect human notes on what failed and why it matters." / footer "Durable annotations"
+03 "Analyze errors" / "Group, refine and prioritize failure modes with a reviewer." / footer "An evidence-linked taxonomy"
+04 "Build trusted evals" / "Curate cases. Validate checks against human judgment." / footer "Calibrated graders + baseline"
+05 "Descent" / "Test one hypothesis. Check regressions. Keep or revert." / footer "A measured improvement"
+06 "Maintain" / "Catch regressions and bring new production failures back into review." / footer "Fresh evidence"
+A thin unmistakable feedback arrow leads from 06 back to 02 outside the cards, labeled "New failures reopen review".
+Bottom footer, large enough to read: "Human judgment defines quality. Evals measure it. Descent improves it."
+Typography is central: render all text accurately, no extra labels, avoid dense text; a practical printable poster, not a screenshot of software.

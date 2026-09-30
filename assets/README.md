@@ -17,3 +17,9 @@ node scripts/create-banner.mjs
 ```
 
 Verify the SVG in a browser at README widths, including `prefers-reduced-motion: reduce`, and inspect the final static PNG. Do not keep alternate generations or preview screenshots in the repository.
+
+## Workflow poster
+
+`eval-workflow-poster.png` is an original standalone field guide, generated with the built-in image-generation tool. It replaces the README's Mermaid chart with a stage-based entry guide and an evaluation loop. The celestial pointillist accents connect it to the banner; its editorial layout and content are original. The supplied course screenshot served only as an example of a standalone workflow illustration, not as source artwork or copy.
+
+The exact generation prompt is saved in [eval-workflow-poster-prompt.txt](eval-workflow-poster-prompt.txt). An accessible [text companion](../docs/workflow-poster.md) preserves the information independently of the image. Inspect text and arrow directions before replacing this asset in future revisions.

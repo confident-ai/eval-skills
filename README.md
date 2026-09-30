@@ -10,39 +10,9 @@ Start with your application's stage, not a metric catalog. Reuse the traces, dat
 
 ## Where are you starting?
 
-```mermaid
-flowchart TD
-    A[Choose one AI feature and its intended outcome] --> B{Already in production?}
-    B -->|Yes| C{Already collecting usable traces?}
-    B -->|No| D{Runnable prototype?}
-    D -->|No| E[Define realistic scenarios and the smallest runnable path]
-    E --> C
-    D -->|Yes| C
-    C -->|Yes| F[Inspect an existing real trace]
-    C -->|No| G[Capture one real execution locally]
-    G --> F
-    F --> H{Enough detail to explain behavior?}
-    H -->|No| I[Repair missing inputs, outputs, tools, or context]
-    I --> F
-    H -->|Yes| J{Already have a dataset?}
-    J -->|Yes| K[Audit provenance, coverage, labels, and freshness]
-    J -->|No| L[Find real examples and fill evidence gaps]
-    K --> M{Already have evals?}
-    L --> M
-    M -->|Yes| N[Audit graders and human validation]
-    M -->|No| O[Review traces and record human observations]
-    N --> P{Evidence and grading trustworthy?}
-    P -->|No| O
-    O --> OA[Analyze annotations into reviewed failure modes]
-    OA --> Q[Curate cases and define failure-specific checks]
-    Q --> R[Validate checks against human judgment]
-    R --> S[Run a reproducible baseline]
-    P -->|Yes| S
-    S --> T[Descent: reduce failures in bounded experiments]
-    T --> U[Check held-out results and regressions]
-    U --> V[Maintain CI checks and production feedback]
-    V --> O
-```
+[![From evidence to better AI: a stage-based entry guide and six-step evaluation workflow, from inspecting evidence through review, error analysis, trusted evals, Descent, and maintenance.](assets/eval-workflow-poster.png)](assets/eval-workflow-poster.png)
+
+[Open the full-size poster](assets/eval-workflow-poster.png) · [Read the text version](docs/workflow-poster.md)
 
 A prototype that cannot run yet can produce scenarios and an evaluation specification. It cannot produce a measured baseline. Production teams with trustworthy evals can go straight to experiments or maintenance.
 
