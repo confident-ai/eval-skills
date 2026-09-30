@@ -50,7 +50,7 @@ A prototype that cannot run yet can produce scenarios and an evaluation specific
 Install the suite with the Skills CLI:
 
 ```bash
-npx skills add https://github.com/confident-ai/eval-skills
+npx skills add https://github.com/confident-ai/codex-eval-skills
 ```
 
 Or install from a local checkout before publication:
