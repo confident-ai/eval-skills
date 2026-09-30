@@ -112,6 +112,9 @@ Instructions, targeted references, portable interchange examples, and small vali
 - [Artifact contract](docs/artifacts.md): portable evidence and experiment records.
 - [Development and validation](CONTRIBUTING.md): tests and contribution expectations.
 - [Sources and acknowledgments](ACKNOWLEDGMENTS.md): methodological influences and integration references.
-- [License](LICENSE): Apache License 2.0.
 
 The banner's [static PNG](assets/eval-skills-banner.png) is available separately. Its animated wrapper respects reduced-motion preferences.
+
+## License
+
+Licensed under the [Apache License 2.0](LICENSE). See [NOTICE](NOTICE) for attribution information.
