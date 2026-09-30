@@ -10,9 +10,9 @@ Start with your application's stage, not a metric catalog. Reuse the traces, dat
 
 ## Who this is for
 
-- **Solo builders and founders** turning an AI prototype into something they can test and improve.
-- **Engineers** debugging failures, comparing changes, and adding regression checks to production apps.
 - **Product managers and domain experts** reviewing real examples and defining what good behavior means for users.
+- **Engineers** debugging failures, comparing changes, and adding regression checks to production apps.
+- **Solo builders and founders** turning an AI prototype into something they can test and improve.
 - **Teams building AI products** bringing shared review, trusted graders, and repeatable experiments into their workflow.
 
 Use these skills with a coding agent. Bring your existing traces, datasets, and evals, or start with one real execution.
