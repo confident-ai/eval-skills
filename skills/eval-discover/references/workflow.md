@@ -8,6 +8,10 @@ Record decisions in the project's existing eval notes, or `.eval/<flow>/workflow
 
 A stage is complete when its evidence exists, not when a checklist was recited. If blocked, finish independent preparation and identify the concrete missing dependency. Never claim a paid run, human review, or hosted connection happened without verifying it.
 
+## Build and Descent
+
+`eval-build` coordinates missing stages through reviewed cases, trusted graders, and a reproducible measured baseline. It resumes from existing evidence rather than restarting. `eval-descent` uses that baseline for bounded application improvements. Focused skills remain available for individual stages; completing one stage does not complete an end-to-end Build request.
+
 ## Separate review, analysis, and measurement
 
 Discovery collects examples and human observations. Error analysis consolidates those annotations into reviewed failure modes with evidence links and priorities. Case curation and grader design turn those definitions into repeatable checks; a validated baseline then supports Descent experiments. Reuse completed stages and return to review when new failure types appear.

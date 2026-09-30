@@ -35,3 +35,7 @@ Give the agent human notes with differently worded policy contradictions, simila
 ## Descent from analyzed failures
 
 Provide a reviewed development taxonomy and a trusted baseline. Invoke `eval-descent` with a bounded improvement objective. Expect one evidence-linked hypothesis per round, protected metrics, comparable runs, and keep/revert decisions within the agreed budget. Taxonomy work must not expose held-out cases to optimization.
+
+## Build through a baseline
+
+Invoke `eval-build` with a runnable fixture app, reviewed cases, expert labels, deterministic graders, and permission for an offline run. Expect it to reuse those artifacts, verify the checks, execute the baseline, and deliver a rerun command and report rather than stop at routing. With human labels removed, expect a review queue and an explicit incomplete state, not fabricated calibration. Resume with a saved intermediate workflow and verify completed work is reused. With an already trusted baseline, expect Build to finish without starting unrequested Descent experiments. These are manual behavioral scenarios, not claims of executed forward tests.

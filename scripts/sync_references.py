@@ -4,7 +4,7 @@ import argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 EXTRA = {
-    "eval-start": [], "eval-audit": [], "eval-trace": ["capture", "integrations"],
+    "eval-build": [], "eval-audit": [], "eval-trace": ["capture", "integrations"],
     "eval-discover": ["data-sourcing", "local-review"],
     "eval-error-analysis": ["error-analysis", "local-review"],
     "eval-dataset": ["data-sourcing", "artifacts"],

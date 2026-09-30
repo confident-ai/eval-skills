@@ -17,6 +17,8 @@ For bundled local tools and exact commands, read [toolkit setup](references/tool
 
 Descent is the name of this improvement loop, not a claim that it computes gradients. Define the objective explicitly: reduce an error, cost, or latency measure, or improve a quality measure while protecting agreed guardrails.
 
+If a trustworthy baseline is missing, use `eval-build` when installed to establish it, or identify the missing cases, calibration, and run evidence before experimenting. Do not treat unvalidated scores as an optimization target.
+
 Audit the baseline before experimenting. Recompute scores; inspect execution errors, grader validation, signal size, and whether the proposed lever actually reaches the app. Fix broken measurement first.
 
 Agree once on the target, protected metrics, editable files/settings, off-limits behavior, maximum rounds or plateau condition, and paid budget. Offer per-change review when requested; default to autonomous work inside the agreed boundary. Do not deploy or merge automatically.

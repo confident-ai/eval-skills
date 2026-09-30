@@ -2,7 +2,7 @@
 
 # Eval Skills
 
-**Find real failures. Build evals you trust. Improve what matters.**
+**Build your evals. Run Descent to improve your app.**
 
 Skills for coding agents that guide you from your first inspectable AI execution to human error analysis, validated graders, repeatable experiments, and production feedback. Works with Claude Code, Codex, Cursor, and other assistants that support Agent Skills.
 
@@ -62,9 +62,14 @@ npx skills add /absolute/path/to/eval-skills
 
 For manual installation, copy the desired directories under `skills/` into your assistant's skills directory. Each skill contains its own references; no sibling skill is required to resolve a file link. Install the full suite for automatic handoffs. If only one skill is installed, it explains the next outcome instead of assuming another skill exists.
 
-Start with:
+Start with one of two main entrypoints:
 
-> Use eval-start to inspect this application and help me build evals from real failures.
+- **[Build](skills/eval-build/SKILL.md)** takes your application from its current stage to reviewed cases, validated graders, and a runnable baseline.
+- **[Descent](skills/eval-descent/SKILL.md)** improves your application against that baseline through bounded experiments.
+
+> Use eval-build to build evals from real failures and establish a runnable baseline.
+>
+> Use eval-descent to reduce latency without regressing our validated quality checks.
 
 Already know the task? Invoke a focused skill directly:
 
@@ -73,14 +78,12 @@ Already know the task? Invoke a focused skill directly:
 > Use eval-error-analysis to group our review notes into failure modes and prioritize them.
 >
 > Use eval-grade to check whether this judge agrees with our expert labels.
->
-> Use eval-descent to reduce latency without regressing the validated quality checks.
 
 ## Skills
 
 | Skill | Use it when |
 | --- | --- |
-| [eval-start](skills/eval-start/SKILL.md) | You need the right next step or want to resume an evaluation workflow. |
+| [eval-build](skills/eval-build/SKILL.md) | You want to build or resume evals through a trustworthy, runnable baseline. |
 | [eval-audit](skills/eval-audit/SKILL.md) | Existing evidence, evals, or headline numbers need examination. |
 | [eval-trace](skills/eval-trace/SKILL.md) | You need the first real trace or missing diagnostic context. |
 | [eval-discover](skills/eval-discover/SKILL.md) | You need realistic data and human-led failure discovery. |
@@ -113,7 +116,7 @@ The same process works across three setups. Choose after inspecting a real execu
 
 | Track | What you get | What you maintain |
 | --- | --- | --- |
-| **Fully managed** | Shared tracing, review, annotation, datasets, and experiment history through [Confident AI](skills/eval-start/references/managed.md), saving agent tokens on custom tooling and making evals simpler to run | Your application and domain-specific quality decisions |
+| **Fully managed** | Shared tracing, review, annotation, datasets, and experiment history through [Confident AI](skills/eval-build/references/managed.md), saving agent tokens on custom tooling and making evals simpler to run | Your application and domain-specific quality decisions |
 | **Local, managed graders** | An AI-built review UI and local artifacts, with ready-made graders from [DeepEval](skills/eval-grade/references/deepeval.md) | Local UI, runner, storage, and grader configuration |
 | **Fully local, build from scratch** | An AI-built review UI, code checks, and custom or existing judges | Local UI, runner, storage, and graders |
 

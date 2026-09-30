@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Build"
+  short_description: "Build trustworthy evals and a runnable baseline"
+  default_prompt: "Use $eval-build to build trustworthy evals for this application and establish a runnable baseline."
