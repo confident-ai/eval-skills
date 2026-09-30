@@ -1,0 +1,1 @@
+{"case_id": "case-01", "rep": 0, "status": "ok", "output": "Yes, you can return it.", "trace_ref": "traces/case-01.json", "grades": {"policy_consistency": {"score": 0, "reason": "Contradicts both eligibility conditions.", "grader_version": "fixture-v1"}}, "usage": null}

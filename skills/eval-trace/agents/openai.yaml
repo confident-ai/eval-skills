@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Trace"
+  short_description: "Capture the first inspectable AI execution"
+  default_prompt: "Use $eval-trace to help with this application’s evaluation workflow."

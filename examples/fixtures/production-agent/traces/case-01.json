@@ -1,0 +1,21 @@
+[
+  {
+    "role": "user",
+    "content": "Can I return an opened item after 45 days?"
+  },
+  {
+    "role": "tool_call",
+    "name": "lookup_policy",
+    "content": {
+      "category": "returns"
+    }
+  },
+  {
+    "role": "tool_result",
+    "content": "Returns accepted within 30 days for unopened items."
+  },
+  {
+    "role": "assistant",
+    "content": "Yes, you can return it."
+  }
+]

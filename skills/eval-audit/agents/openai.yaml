@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Audit"
+  short_description: "Check whether an AI evaluation can be trusted"
+  default_prompt: "Use $eval-audit to help with this application’s evaluation workflow."

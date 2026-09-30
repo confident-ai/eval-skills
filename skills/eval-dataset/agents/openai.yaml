@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Dataset"
+  short_description: "Curate replayable cases and protected splits"
+  default_prompt: "Use $eval-dataset to help with this application’s evaluation workflow."

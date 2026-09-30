@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Improve"
+  short_description: "Improve AI behavior through bounded experiments"
+  default_prompt: "Use $eval-improve to help with this application’s evaluation workflow."

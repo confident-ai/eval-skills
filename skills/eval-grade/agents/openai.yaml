@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Grade"
+  short_description: "Build and validate failure-specific graders"
+  default_prompt: "Use $eval-grade to help with this application’s evaluation workflow."

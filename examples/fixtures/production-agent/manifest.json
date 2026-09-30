@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "flow": "production-agent",
+  "dataset_version": "synthetic-scenario-v1",
+  "sample_purpose": "demonstration"
+}

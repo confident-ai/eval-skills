@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Run"
+  short_description: "Run reproducible AI evaluations"
+  default_prompt: "Use $eval-run to help with this application’s evaluation workflow."

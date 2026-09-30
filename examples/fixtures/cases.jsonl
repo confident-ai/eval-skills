@@ -1,0 +1,3 @@
+{"id":"ticket-01","group_id":"conversation-01","input":"I was charged twice.","expected":"billing","reference_origin":"synthetic demonstration author","source":{"kind":"synthetic"},"tags":["billing"]}
+{"id":"ticket-02","group_id":"conversation-02","input":"The app crashes when I open it.","expected":"technical","reference_origin":"synthetic demonstration author","source":{"kind":"synthetic"},"tags":["technical"]}
+{"id":"ticket-03","group_id":"conversation-03","input":"Please correct the amount on my invoice.","expected":"billing","reference_origin":"synthetic demonstration author","source":{"kind":"synthetic"},"tags":["billing"]}

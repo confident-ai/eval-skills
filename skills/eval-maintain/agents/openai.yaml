@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Maintain"
+  short_description: "Maintain regression checks and fresh evidence"
+  default_prompt: "Use $eval-maintain to help with this application’s evaluation workflow."

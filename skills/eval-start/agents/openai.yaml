@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Start"
+  short_description: "Find the next step in your AI eval workflow"
+  default_prompt: "Use $eval-start to help with this application’s evaluation workflow."
