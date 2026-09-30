@@ -1,0 +1,23 @@
+{
+  "name": "eval-skills-template-tests",
+  "private": true,
+  "type": "module",
+  "description": "Typechecks and runs the TypeScript/Node templates shipped in skills/*/templates.",
+  "scripts": {
+    "typecheck": "node copy-templates.mjs && tsc -p tsconfig.json",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.124.0",
+    "@opentelemetry/sdk-trace-base": "^2.0.0",
+    "@types/node": "^22.0.0",
+    "confident-trace": "0.1.0-alpha.8",
+    "deepeval": "^0.9.21",
+    "openai": "^6.8.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "overrides": {
+    "protobufjs@8.0.0": "^8.8.0"
+  }
+}

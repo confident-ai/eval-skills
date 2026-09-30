@@ -14,3 +14,34 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python examples/offline_eval.py --output "${RUNNER_TEMP}/eval-skills-example"
       - run: python skills/eval-run/scripts/artifacts.py validate "${RUNNER_TEMP}/eval-skills-example"
+  python-toolkit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.10', '3.12']
+    env:
+      DEEPEVAL_TELEMETRY_OPT_OUT: '1'
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -r tests/toolkit/requirements.txt
+      - run: python -m pytest tests/toolkit -q
+      - run: python examples/toolkit_smoke.py --output "${RUNNER_TEMP}/toolkit-smoke"
+  typescript-toolkit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests/toolkit/ts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tests/toolkit/ts/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
