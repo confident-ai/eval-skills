@@ -1,0 +1,38 @@
+Use case: infographic-diagram.
+Create a NEW standalone companion educational poster for the "Three example journeys" section of the Eval Skills GitHub README. Use the referenced image ONLY as visual family reference, not as an edit target. Make a different original composition with three parallel horizontal journey lanes; do not repeat the six-stage workflow. Landscape 3:2, high-resolution polished readable editorial design.
+
+Match reference: ivory paper, midnight navy serif headlines, highly legible sans-serif body, teal lines and muted golden numerals, thin rules, understated romantic pointillist celestial scenery confined to header/footer margins. Generous spacing, clear visual hierarchy, practical exportable poster. No vendor branding, no invented metrics, no screenshots or UI dashboards. Use "eval" rather than "evaluation". Main content on clean background. Exact copy below; no additional prose.
+
+Eyebrow: "EVAL SKILLS / FIELD GUIDE 02"
+Title: "Three starting points. One useful next step."
+Subtitle: "Use the evidence you have. Build the missing piece."
+
+Three spacious horizontal lanes stacked vertically. Each lane has its starting point on left, three clearly connected left-to-right action stops in the middle, and an outcome on right. Distinguish lane number in gold. Use small meaningful custom line illustrations (seedling for prototype, branching traces for production, magnifying glass over checks for audit). Arrows do not connect one lane to another. Labels large enough to read in a README. Each lane has one concise principle beneath its steps.
+
+LANE 01
+Start heading: "Prototype, no logs"
+Action stop 1: "Run one real request"
+Action stop 2: "Inspect the full trace"
+Action stop 3: "Review realistic examples"
+Outcome heading: "First reviewed evidence"
+Principle: "Review outputs before designing graders."
+
+LANE 02
+Start heading: "Production, many traces"
+Action stop 1: "Sample tasks and traffic"
+Action stop 2: "Annotate and group failures"
+Action stop 3: "Curate confirmed cases"
+Outcome heading: "Prioritized failure modes"
+Principle: "Discovery samples reveal failure types, not production rates."
+
+LANE 03
+Start heading: "Existing evals, doubtful scores"
+Action stop 1: "Recompute raw results"
+Action stop 2: "Inspect grader mistakes"
+Action stop 3: "Validate against human labels"
+Outcome heading: "A baseline you can trust"
+Principle: "Fix the measurement before optimizing the app."
+
+Footer text: "Different entry points. The same commitment to evidence."
+
+Accurate text is essential. Clean distinct sequential arrows, no tangled connectors, no fake percentages or charts, no tiny explanatory blocks. Keep colors, letterforms, elegant frame, and pointillist landscape subtle and consistent with the supplied style reference. A sophisticated information poster, not a marketing collage.

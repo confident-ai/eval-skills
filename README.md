@@ -88,6 +88,10 @@ Already know the task? Invoke a focused skill directly:
 
 ## Three example journeys
 
+[![Three starting points: a prototype moves toward reviewed evidence, production traces toward prioritized failure modes, and existing evals toward a trustworthy baseline.](assets/eval-journeys-poster.png)](assets/eval-journeys-poster.png)
+
+[Open the full-size journeys poster](assets/eval-journeys-poster.png). Each journey is described below.
+
 **Prototype, no logs.** Run one real request locally. Inspect its full execution. Gather a few expert examples, then generate variations aimed at plausible failures. Review outputs before designing graders. Do not call synthetic scenarios production-representative without evidence.
 
 **Production agent, lots of traces.** Reuse the existing exporter. Sample across customer tasks, failures, and normal traffic. Review in a shared workspace or a fitted local viewer. Human notes become failure categories, and confirmed examples become regression cases. Discovery samples do not estimate production prevalence.

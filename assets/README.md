@@ -23,3 +23,9 @@ Verify the SVG in a browser at README widths, including `prefers-reduced-motion:
 `eval-workflow-poster.png` is an original standalone field guide, generated with the built-in image-generation tool. It replaces the README's Mermaid chart with a stage-based entry guide and an evaluation loop. The celestial pointillist accents connect it to the banner; its editorial layout and content are original. The supplied course screenshot served only as an example of a standalone workflow illustration, not as source artwork or copy.
 
 The exact generation prompt is saved in [eval-workflow-poster-prompt.txt](eval-workflow-poster-prompt.txt). An accessible [text companion](../docs/workflow-poster.md) preserves the information independently of the image. Inspect text and arrow directions before replacing this asset in future revisions.
+
+## Three example journeys poster
+
+`eval-journeys-poster.png` is Field Guide 02, an original companion generated with the built-in image-generation tool. The workflow poster was supplied as a visual style reference. Three independent lanes connect each starting point to useful actions and an outcome; the README retains the equivalent text below the image.
+
+The exact prompt is in [eval-journeys-poster-prompt.txt](eval-journeys-poster-prompt.txt).
