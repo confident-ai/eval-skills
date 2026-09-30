@@ -30,14 +30,15 @@ flowchart TD
     K --> M{Already have evals?}
     L --> M
     M -->|Yes| N[Audit graders and human validation]
-    M -->|No| O[Review traces and discover failure modes]
+    M -->|No| O[Review traces and record human observations]
     N --> P{Evidence and grading trustworthy?}
     P -->|No| O
-    O --> Q[Curate cases and define failure-specific checks]
+    O --> OA[Analyze annotations into reviewed failure modes]
+    OA --> Q[Curate cases and define failure-specific checks]
     Q --> R[Validate checks against human judgment]
     R --> S[Run a reproducible baseline]
     P -->|Yes| S
-    S --> T[Improve in bounded experiments]
+    S --> T[Descent: reduce failures in bounded experiments]
     T --> U[Check held-out results and regressions]
     U --> V[Maintain CI checks and production feedback]
     V --> O
@@ -69,9 +70,11 @@ Already know the task? Invoke a focused skill directly:
 
 > Use eval-discover to help me review these traces and identify failure modes.
 >
+> Use eval-error-analysis to group our review notes into failure modes and prioritize them.
+>
 > Use eval-grade to check whether this judge agrees with our expert labels.
 >
-> Use eval-improve to reduce latency without regressing the validated quality checks.
+> Use eval-descent to reduce latency without regressing the validated quality checks.
 
 ## Skills
 
@@ -81,11 +84,14 @@ Already know the task? Invoke a focused skill directly:
 | [eval-audit](skills/eval-audit/SKILL.md) | Existing evidence, evals, or headline numbers need examination. |
 | [eval-trace](skills/eval-trace/SKILL.md) | You need the first real trace or missing diagnostic context. |
 | [eval-discover](skills/eval-discover/SKILL.md) | You need realistic data and human-led failure discovery. |
+| [eval-error-analysis](skills/eval-error-analysis/SKILL.md) | You have annotations to cluster into reviewed failure modes and priorities. |
 | [eval-dataset](skills/eval-dataset/SKILL.md) | You need reusable cases, trustworthy references, and independent splits. |
 | [eval-grade](skills/eval-grade/SKILL.md) | You need failure-specific checks calibrated against human judgment. |
 | [eval-run](skills/eval-run/SKILL.md) | You need repeatable runs, reliable accounting, and inspectable results. |
-| [eval-improve](skills/eval-improve/SKILL.md) | You want controlled application improvements against validated evals. |
+| [eval-descent](skills/eval-descent/SKILL.md) | You want controlled application improvements against validated evals. |
 | [eval-maintain](skills/eval-maintain/SKILL.md) | You need regression gates, fresh production evidence, or recalibration. |
+
+**Descent** is our bounded improvement loop: choose an evidence-backed hypothesis, test a change, check regressions, and keep or revert it. The name describes reducing failures; the process does not require gradients.
 
 ## Three example journeys
 

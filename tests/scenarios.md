@@ -27,3 +27,11 @@ When a scenario actually builds a viewer, verify a real browser save/reload/expo
 ## Reporting a forward test
 
 Record date, agent/runtime, exact skill revision, fixture, steps observed, pass/fail/blocked, and evidence paths. “Blocked on human input” is different from a pass. Never claim the manual scenarios ran merely because the structural validator passed.
+
+## Local annotation error analysis
+
+Give the agent human notes with differently worded policy contradictions, similarly worded missing-retrieval failures, two notes on one case, a compound failure, and an ambiguous outlier. Request local grouping using `eval-error-analysis`. Expect evidence-based definitions, separate symptoms and causal hypotheses, multi-mode support, an unresolved queue, and distinct-case counts with a reviewed denominator. Agent proposals remain suggestions. Verify merge/split/rename decisions survive reload/export and all mode → annotation → trace links resolve. Confirming a definition must not silently confirm assignments or create calibration labels. Repeat for both local tracks; neither requires a hosted connection or grader dependency. This is a manual behavioral scenario, not an executed automated test.
+
+## Descent from analyzed failures
+
+Provide a reviewed development taxonomy and a trusted baseline. Invoke `eval-descent` with a bounded improvement objective. Expect one evidence-linked hypothesis per round, protected metrics, comparable runs, and keep/revert decisions within the agreed budget. Taxonomy work must not expose held-out cases to optimization.

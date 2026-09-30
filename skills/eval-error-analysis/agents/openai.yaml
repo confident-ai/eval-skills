@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval Error Analysis"
+  short_description: "Turn review notes into evidence-linked failure modes"
+  default_prompt: "Use $eval-error-analysis to group these annotations into reviewable failure modes and prioritize what to address."

@@ -4,6 +4,8 @@ Portability means preserving evidence and decisions, not promising identical inf
 
 Export cases with stable IDs, source trace IDs, inputs, approved reference information, tags, and conversation/group IDs. Export human annotations with authorship, criteria versions, and confirmed/suggested status. Preserve grader definitions, judge versions, thresholds, run configuration, raw output references, scores, reasons, errors, and usage where available.
 
+Preserve failure taxonomy revisions, definitions, annotation-to-mode assignments, unresolved items, and reviewer decisions. Verify mode → annotation → trace links after migration; category confirmation and assignment confirmation are distinct.
+
 Keep original exports unchanged. Write an adapter into the portable contract only for fields actually present. Missing values remain null; missing usage is never zero. Retain vendor metadata in a separate `source` or `metadata` field. Copy any referenced artifacts that otherwise depend on an expiring URL, if permitted, and verify local links.
 
 To move local:

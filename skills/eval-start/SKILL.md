@@ -23,12 +23,13 @@ Inventory actual evidence locations and access: logs, trace exports, support exa
 | --- | --- |
 | No runnable app | Write realistic scenarios and identify the minimal execution; do not claim a baseline |
 | No inspectable execution | `eval-trace`: one real locally inspected trace |
-| Traces but unclear failures | `eval-discover`: expert observations and failure taxonomy |
+| Traces but no review notes | `eval-discover`: realistic examples and expert observations |
+| Annotations but unclear failure categories | `eval-error-analysis`: reviewed taxonomy and priorities |
 | Failures but no reliable cases | `eval-dataset`: reviewed, replayable cases with provenance |
 | Cases but no trusted checks | `eval-grade`: failure-specific checks and human calibration |
 | Existing eval pipeline | `eval-audit`: verify before replacing or optimizing |
 | Trusted eval, no baseline | `eval-run`: reproducible measured baseline |
-| Trusted baseline, improvement goal | `eval-improve`: bounded experiments |
+| Trusted baseline, improvement goal | `eval-descent`: bounded experiments |
 | Shipping or operating | `eval-maintain`: regression gates and feedback |
 
 Do not force mature users through every stage. If a focused skill is unavailable, explain the missing outcome and use available artifacts; do not invoke imaginary tools or paths.

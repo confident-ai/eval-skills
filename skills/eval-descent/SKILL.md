@@ -1,5 +1,5 @@
 ---
-name: eval-improve
+name: eval-descent
 description: Improve an AI application through bounded, evidence-linked experiments against validated evals. Use for quality, latency, cost, or model migration; requires a trustworthy baseline.
 license: Apache-2.0
 metadata:
@@ -7,19 +7,21 @@ metadata:
   version: "1.0.0"
 ---
 
-# Improve against a trusted eval
+# Descent: reduce failures through bounded experiments
 
 Read [the operating agreement](references/workflow.md), [experiment design](references/experiments.md), and [execution requirements](references/execution.md). Use [managed workflow guidance](references/managed.md) when selected.
 
 ## Agree on the loop
 
-Audit the baseline before climbing. Recompute scores; inspect execution errors, grader validation, signal size, and whether the proposed lever actually reaches the app. Fix broken measurement first.
+Descent is the name of this improvement loop, not a claim that it computes gradients. Define the objective explicitly: reduce an error, cost, or latency measure, or improve a quality measure while protecting agreed guardrails.
+
+Audit the baseline before experimenting. Recompute scores; inspect execution errors, grader validation, signal size, and whether the proposed lever actually reaches the app. Fix broken measurement first.
 
 Agree once on the target, protected metrics, editable files/settings, off-limits behavior, maximum rounds or plateau condition, and paid budget. Offer per-change review when requested; default to autonomous work inside the agreed boundary. Do not deploy or merge automatically.
 
 ## Each round
 
-1. Diagnose development examples and observed mechanisms. Where delegation is available and permitted, give one fresh analyzer only development records, current artifacts, scope, and target. Otherwise diagnose locally while excluding held-out content.
+1. Diagnose development examples and observed mechanisms. Reuse the reviewed failure taxonomy and its evidence links; if annotations need grouping, use `eval-error-analysis` when installed, or produce a reviewable taxonomy before choosing a target. Keep this analysis on development evidence. Where delegation is available and permitted, give one fresh analyzer only development records, current artifacts, scope, and target. Otherwise diagnose locally while excluding held-out content.
 2. Propose one causal hypothesis with supporting cases, predicted benefit, and possible regressions. A patch can touch multiple files if it implements one hypothesis. Prefer operational instructions over vague prompt padding.
 3. Apply the scoped patch and save its diff, rationale, and configuration fingerprint. Changes to the runner or grader require reviewing measurement impact, not quietly counting a new score as an app improvement.
 4. Smoke-test settings and execution. Run the fixed comparable set at the agreed repetitions. Preserve raw results and billed errors.

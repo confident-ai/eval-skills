@@ -10,9 +10,11 @@ Support three operations: read a paginated/filterable record set; read annotatio
 
 Store the original data separately from annotations. Suggested annotations carry their origin and cannot become confirmed without a human action. Save pending edits immediately and show failure/retry state. A browser reload must recover saved state. Provide a documented start/stop command and export function.
 
-## Two review modes
+## Three review modes
 
 **Discovery:** render full content, permit free-text notes, optionally support text-span highlights, and show evidence next to notes. Do not force a premature failure taxonomy on reviewers.
+
+**Error analysis:** group existing notes into proposed failure modes with definitions and evidence. Let the reviewer merge, split, rename, reassign, and confirm; show unresolved and multi-mode cases. Preserve taxonomy revisions and keep definition approval separate from assignment approval.
 
 **Calibration:** render the trace with per-criterion Pass/Fail/Uncertain labels and notes. Hide judge predictions during initial expert labeling to reduce anchoring, then offer a disagreement view. Uncertain labels are not silently counted as failures.
 

@@ -8,6 +8,10 @@ Record decisions in the project's existing eval notes, or `.eval/<flow>/workflow
 
 A stage is complete when its evidence exists, not when a checklist was recited. If blocked, finish independent preparation and identify the concrete missing dependency. Never claim a paid run, human review, or hosted connection happened without verifying it.
 
+## Separate review, analysis, and measurement
+
+Discovery collects examples and human observations. Error analysis consolidates those annotations into reviewed failure modes with evidence links and priorities. Case curation and grader design turn those definitions into repeatable checks; a validated baseline then supports Descent experiments. Reuse completed stages and return to review when new failure types appear.
+
 ## Decisions and authorization
 
 Ask only unresolved product or access questions. Use the host's question widget when available; otherwise ask concise text questions. List a reasoned recommendation first. Honor explicit choices and existing authorization.

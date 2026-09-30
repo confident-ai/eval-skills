@@ -13,7 +13,7 @@ Read [the operating agreement](references/workflow.md) and [calibration](referen
 
 ## Establish the claim
 
-Start from an observed failure or explicit product requirement. Name the check, its unit (output, turn, conversation, trace, or end state), necessary evidence, and clear pass/fail meaning. A vague “quality” score is not enough.
+Start from an observed failure or explicit product requirement. Reuse reviewed taxonomy IDs, definitions, and boundary examples. If notes need consolidation, use `eval-error-analysis` when installed; taxonomy approval does not replace independent calibration labels. Name the check, its unit (output, turn, conversation, trace, or end state), necessary evidence, and clear pass/fail meaning. A vague “quality” score is not enough.
 
 Use code when it can directly test the outcome. Do not substitute keyword matching for a semantic requirement without measuring that proxy against human judgment. For agents, inspect fixture state, tests, files, or expected API effects; use transcript checks for process constraints.
 

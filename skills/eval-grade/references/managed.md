@@ -15,7 +15,8 @@ Use project/region identifiers actually returned by the account. Configure crede
 | Workflow milestone | Hosted action | Evidence to retain |
 | --- | --- | --- |
 | Inspect behavior | Open an actual trace/thread and its spans | Original trace ID and local first-trace note |
-| Discover failures | Assemble a review queue or review set; collect open-ended expert notes | Sampling rules, human annotations, taxonomy |
+| Discover failures | Assemble a review queue or review set; collect open-ended expert notes | Sampling rules, human annotations |
+| Analyze errors | Reuse available annotation grouping and taxonomy review; export evidence links and decisions | Versioned failure modes, assignments, unresolved items, priorities |
 | Establish cases | Curate a dataset from confirmed examples | Case IDs, provenance, references, export/version |
 | Define graders | Create or reuse supported evaluation criteria | Rubric/metric definition, threshold, judge/version |
 | Validate graders | Compare automated results with expert labels | Confusion counts, disagreements, held-out results |
