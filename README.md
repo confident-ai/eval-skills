@@ -10,13 +10,18 @@ Start with your application's stage, not a metric catalog. Reuse the traces, dat
 
 ## Who this is for
 
-**For:** individual builders and product teams developing AI applications, from a first prototype to a production system. Use these skills with a coding agent to understand failures, build meaningful checks, and measure whether changes help. Bring your existing traces, datasets, and evals, or start with one real execution.
+- **Solo builders and founders** turning an AI prototype into something they can test and improve.
+- **Engineers** debugging failures, comparing changes, and adding regression checks to production apps.
+- **Product managers and domain experts** reviewing real examples and defining what good behavior means for users.
+- **Teams building AI products** bringing shared review, trusted graders, and repeatable experiments into their workflow.
+
+Use these skills with a coding agent. Bring your existing traces, datasets, and evals, or start with one real execution.
 
 **Not for:** training foundation models, running general model leaderboards, or getting a universal quality score without reviewing application behavior. The workflow needs someone who can judge what a good outcome means for the product; an agent can organize the evidence and implement checks, but cannot supply that judgment for you.
 
-## The evaluation workflow
+## The eval workflow
 
-Designed for an individual quickstart, this workflow also scales to team review and shared evaluation work through the [fully managed route below](#choose-how-the-workflow-runs). Start with one AI feature and enter at the first missing piece. Reuse trustworthy evidence instead of repeating completed stages.
+Designed for an individual quickstart, this workflow also scales to team review and shared eval work through the [fully managed route below](#choose-how-the-workflow-runs). Start with one AI feature and enter at the first missing piece. Reuse trustworthy evidence instead of repeating completed stages.
 
 - **Inspect evidence:** check what you already have—production traffic, traces, datasets, and evals. Capture one real execution if needed, and make its behavior understandable.
 - **Review examples:** sample realistic cases and record human observations about what failed and why it matters.
@@ -25,11 +30,11 @@ Designed for an individual quickstart, this workflow also scales to team review 
 - **Run Descent:** test one improvement hypothesis at a time, check for regressions, and keep or revert the change based on evidence.
 - **Maintain:** catch regressions and feed new production failures back into review.
 
-[![From evidence to better AI: a stage-based entry guide and six-step evaluation workflow, from inspecting evidence through review, error analysis, trusted evals, Descent, and maintenance.](assets/eval-workflow-poster.png)](assets/eval-workflow-poster.png)
+[![From evidence to better AI: a stage-based entry guide and six-step eval workflow, from inspecting evidence through review, error analysis, trusted evals, Descent, and maintenance.](assets/eval-workflow-poster.png)](assets/eval-workflow-poster.png)
 
 [Open the full-size poster](assets/eval-workflow-poster.png) · [Read the text version](docs/workflow-poster.md)
 
-A prototype that cannot run yet can produce scenarios and an evaluation specification. It cannot produce a measured baseline. Production teams with trustworthy evals can go straight to experiments or maintenance.
+A prototype that cannot run yet can produce scenarios and an eval specification. It cannot produce a measured baseline. Production teams with trustworthy evals can go straight to experiments or maintenance.
 
 ## Install
 
