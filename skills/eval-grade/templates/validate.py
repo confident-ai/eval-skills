@@ -153,12 +153,15 @@ def cmd_split(args) -> None:
     labels = load_labels(args.labels, args.mode)
     from grouped_split import grouped_split
     traces = load_traces(args.traces)
-    out = grouped_split([{"id":i,"group_id":traces.get(i,{}).get("group_id") or traces.get(i,{}).get("thread_id") or i} for i in labels], (.15,.45,.4), args.seed)
+    out = grouped_split([{"id":i,"group_id":traces.get(i,{}).get("group_id") or traces.get(i,{}).get("thread_id") or i,"stratum":labels[i]} for i in labels], (.15,.45,.4), args.seed)
     splits[args.mode] = {**out, "drawn_at": datetime.now(timezone.utc).isoformat(), "test_runs": 0}
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     splits_path.write_text(json.dumps(splits, indent=2))
     counts = {k: f"{sum(labels[i] == 'pass' for i in v)} pass / {sum(labels[i] == 'fail' for i in v)} fail" for k, v in out.items()}
     print(f"Splits for {args.mode}: " + "; ".join(f"{k}: {c}" for k, c in counts.items()))
+    lacking = [f"{k} has no {v} labels" for k, ids in out.items() for v in ("pass", "fail") if not any(labels[i] == v for i in ids)]
+    if lacking:
+        print("Note: " + "; ".join(lacking) + ". Related traces stay in one split; label more independent examples.")
     fails = sum(1 for v in labels.values() if v == "fail")
     if fails < 30 or len(labels) - fails < 30:
         print("Note: fewer than ~30 labels of each kind; TPR/TNR will have wide intervals. Label more if you can.")
@@ -249,7 +252,7 @@ def main() -> None:
     ap.add_argument("--graders", default=".eval/default/graders/graders.py")
     ap.add_argument("--observed-pass-rate", type=float)
     ap.add_argument("--concurrency", type=int, default=8)
-    ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--seed", type=int, default=7)  # same default as validate.ts, which shares splits.json
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
     {"split": cmd_split, "run": cmd_run, "correct": cmd_correct}[args.command](args)
