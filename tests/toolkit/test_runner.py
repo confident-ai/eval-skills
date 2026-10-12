@@ -111,7 +111,7 @@ def test_monitor_alerts_on_drop(project):
     assert "window: 0.80" in first.stdout
     write_jsonl(project / ".eval/default/traces/traces.jsonl", [dict(t, output="45 days") for t in traces])
     second = run_py(m, "--only", "window", "--seed", "1", cwd=project, check=False)
-    assert second.returncode == 2 and "below last window" in second.stdout
+    assert second.returncode == 2 and "regression" in second.stdout
     assert len(read_jsonl(project / ".eval/default/monitoring/trend.jsonl")) == 2
 
 
