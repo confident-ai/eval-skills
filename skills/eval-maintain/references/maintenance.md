@@ -12,7 +12,7 @@ For managed users inspect [Confident Actions](https://github.com/confident-ai/co
 
 Agree on traffic sampling, data handling, cost ceiling, retention, evaluation unit, alert threshold, and responsible person. Conversations need an explicit completion boundary before final-outcome grading. Reference-free checks cannot validate facts that require inaccessible ground truth.
 
-Track representative traffic separately from complaint/failure-triggered review. Keep source-to-case lineage so confirmed production failures become regression cases. Alert only on meaningful changes with sample counts and error context; deduplicate repeated alerts.
+Track representative traffic separately from complaint/failure-triggered review. Keep source-to-case lineage so confirmed production failures become regression cases. Alert only on meaningful changes with sample counts and error context; deduplicate repeated alerts. The bundled local monitor compares each window with pooled earlier usable windows: it exits 2 on a statistically significant drop and 3 when a window is incomplete (too many grader errors, or fewer graded traces than a configured `--min-n`). Route the two separately, set `--min-drop` to the smallest change worth acting on, and expect about `--alpha` false alerts per monitored mode per window.
 
 ## Refresh and handover
 

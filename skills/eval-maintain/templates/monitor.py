@@ -7,11 +7,36 @@ Samples traces started within the window, runs the graders from
 .eval/default/graders/graders.py (eval-skills grader contract), and appends one line
 per failure mode to .eval/default/monitoring/trend.jsonl:
 
-    {"window_end": ..., "hours": 24, "mode": "invented-policy", "n": 200, "pass_rate": 0.91, "ci95": [0.86, 0.94], "errors": 0}
+    {"window_end": ..., "hours": 24, "mode": "invented-policy", "n": 200, "passes": 182, "pass_rate": 0.91,
+     "ci95": [0.86, 0.94], "errors": 0, "status": "ok", "alpha": 0.01,
+     "reference": {"windows": 7, "n": 1400, "pass_rate": 0.92}, "delta": -0.01, "delta_upper": 0.03}
 
-Exits with status 2 and prints a warning when a failure mode's pass rate falls
-below the lower bound of its previous window's interval, so a scheduler or CI
-job can alert on it.
+Each window is compared with a reference: the pooled counts of the last
+--reference-windows usable windows for the same mode. A window is usable when it
+has graded traces (at least --min-n, if set), a grader error rate of at most
+--max-error-rate, and was not itself flagged. The comparison is a one-sided
+test of the difference in pass rate (Newcombe's hybrid score interval, built from
+Wilson intervals), valid for small windows too: a window is a regression when
+the upper bound of (window - reference) at confidence 1 - alpha is below zero
+and the drop is at least --min-drop.
+
+    status        meaning                                                   exit
+    ok            no significant drop against the reference                 0
+    no-reference  no usable earlier window yet; this one can become one     0
+    regression    significant drop; a scheduler or CI job can alert on it   2
+    incomplete    grader errors above --max-error-rate, or fewer graded     3
+                  traces than --min-n; not compared, never a reference
+
+A run with any regression exits 2, otherwise 3 if any mode is incomplete.
+Grader errors are provider or harness failures, not verdicts: an outage is
+reported instead of passing silently, and it never becomes the baseline the next
+window is compared with. Flagged windows stay out of the reference, so a lasting
+regression keeps alerting instead of becoming the new normal; to accept a new
+level on purpose, start a new trend file with --out.
+
+Each mode is tested separately, so on unchanged traffic expect about
+alpha x modes false alerts per window. Windows that overlap (a 24h window run
+hourly) share traces and are not independent; schedule non-overlapping windows.
 
 Part of eval-skills (Apache-2.0). Standard library only (plus your graders).
 """
@@ -29,6 +54,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from statistics import NormalDist
 
 
 def load_graders(path: str) -> dict:
@@ -52,14 +78,43 @@ def trace_to_case_result(record: dict) -> tuple[dict, dict]:
     return case, result
 
 
-def wilson(passes: int, n: int, z: float = 1.96) -> list[float]:
-    if n == 0:
-        return [0.0, 0.0]
+def wilson_bounds(passes: float, n: int, z: float = 1.96) -> tuple[float, float]:
     p = passes / n
     denom = 1 + z * z / n
     centre = (p + z * z / (2 * n)) / denom
     half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denom
-    return [round(max(0.0, centre - half), 4), round(min(1.0, centre + half), 4)]
+    return max(0.0, centre - half), min(1.0, centre + half)
+
+
+def wilson(passes: int, n: int, z: float = 1.96) -> list[float] | None:
+    if n == 0:
+        return None  # nothing graded: the interval is unknown, not [0, 0]
+    return [round(b, 4) for b in wilson_bounds(passes, n, z)]
+
+
+def drop_test(passes: int, n: int, ref_passes: int, ref_n: int, alpha: float) -> tuple[float, float]:
+    """Return (window - reference) pass rate and its one-sided upper bound at confidence 1 - alpha.
+
+    Newcombe's hybrid score interval (method 10) from the two Wilson intervals; it stays
+    sensible near 0 and 1, where production pass rates usually sit.
+    """
+    z = NormalDist().inv_cdf(1 - alpha)
+    p, q = passes / n, ref_passes / ref_n
+    upper_p = wilson_bounds(passes, n, z)[1]
+    lower_q = wilson_bounds(ref_passes, ref_n, z)[0]
+    return p - q, p - q + math.sqrt((upper_p - p) ** 2 + (q - lower_q) ** 2)
+
+
+def usable(row: dict, min_n: int, max_error_rate: float) -> bool:
+    """Whether an earlier trend row can serve as reference. Rows written before statuses existed are judged by their counts."""
+    if row.get("status") in ("regression", "incomplete"):
+        return False
+    n, errors = row.get("n") or 0, row.get("errors") or 0
+    return n >= max(min_n, 1) and row.get("pass_rate") is not None and errors / (n + errors) <= max_error_rate
+
+
+def passes_of(row: dict) -> int:
+    return row["passes"] if isinstance(row.get("passes"), int) else round(row["pass_rate"] * row["n"])
 
 
 def call(grader, case, result) -> dict:
@@ -82,7 +137,17 @@ def main() -> None:
     ap.add_argument("--environment", default=None, help="keep traces whose metadata.environment matches")
     ap.add_argument("--concurrency", type=int, default=8)
     ap.add_argument("--seed", type=int, default=None)
+    ap.add_argument("--reference-windows", type=int, default=7, help="usable earlier windows pooled into the reference")
+    ap.add_argument("--alpha", type=float, default=0.01, help="one-sided false-alert rate per mode per window")
+    ap.add_argument("--min-drop", type=float, default=0.0, help="smallest drop in pass rate worth alerting on, e.g. 0.03")
+    ap.add_argument("--min-n", type=int, default=1, help="policy floor: graded traces needed to compare a window or use it as reference")
+    ap.add_argument("--max-error-rate", type=float, default=0.1, help="grader error share above which a window is incomplete")
     args = ap.parse_args()
+    # Exit 1, not argparse's 2: exit 2 means "regression" to the scheduler.
+    if not 0 < args.alpha < 0.5:
+        sys.exit("--alpha must be between 0 and 0.5")
+    if args.reference_windows < 1:
+        sys.exit("--reference-windows must be at least 1")
 
     now = datetime.now(timezone.utc)
     since = now - timedelta(hours=args.since_hours)
@@ -118,32 +183,58 @@ def main() -> None:
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    previous: dict[str, dict] = {}
+    history: dict[str, list[dict]] = {}
     if out_path.exists():
         for line in out_path.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 row = json.loads(line)
-                previous[row["mode"]] = row
+                history.setdefault(row["mode"], []).append(row)
 
-    alert = False
+    regressed = incomplete = False
     with out_path.open("a", encoding="utf-8") as f:
         for mode_id in graders:
             graded = [v[mode_id] for v in verdicts if v[mode_id] is not None]
-            passes = sum(graded)
+            n, passes = len(graded), sum(graded)
+            errors = len(verdicts) - n
             row = {
-                "window_end": now.isoformat(), "hours": args.since_hours, "mode": mode_id, "n": len(graded),
-                "pass_rate": round(passes / len(graded), 4) if graded else None, "ci95": wilson(passes, len(graded)),
-                "errors": sum(v[mode_id] is None for v in verdicts),
+                "window_end": now.isoformat(), "hours": args.since_hours, "mode": mode_id, "n": n, "passes": passes,
+                "pass_rate": round(passes / n, 4) if n else None, "ci95": wilson(passes, n), "errors": errors,
+                "status": None, "alpha": args.alpha, "reference": None, "delta": None, "delta_upper": None,
             }
+            reference = [r for r in history.get(mode_id, []) if usable(r, args.min_n, args.max_error_rate)][-args.reference_windows:]
+            if n < max(args.min_n, 1) or errors / len(verdicts) > args.max_error_rate:
+                row["status"] = "incomplete"
+            elif not reference:
+                row["status"] = "no-reference"
+            else:
+                ref_passes, ref_n = sum(passes_of(r) for r in reference), sum(r["n"] for r in reference)
+                delta, upper = drop_test(passes, n, ref_passes, ref_n, args.alpha)
+                row["reference"] = {"windows": len(reference), "n": ref_n, "pass_rate": round(ref_passes / ref_n, 4)}
+                row["delta"], row["delta_upper"] = round(delta, 4), round(upper, 4)
+                row["status"] = "regression" if upper < 0 and -delta >= args.min_drop else "ok"
             f.write(json.dumps(row) + "\n")
-            prev = previous.get(mode_id)
-            flag = ""
-            if prev and row["pass_rate"] is not None and prev.get("ci95") and row["pass_rate"] < prev["ci95"][0]:
-                flag, alert = "  ⚠ below last window's interval", True
+
             rate = "n/a" if row["pass_rate"] is None else f"{row['pass_rate']:.2f}"
-            print(f"{mode_id}: {rate} (95% CI {row['ci95'][0]:.2f}–{row['ci95'][1]:.2f}, n={row['n']}, errors={row['errors']}){flag}")
-    if alert:
+            ci = "" if row["ci95"] is None else f"95% CI {row['ci95'][0]:.2f}–{row['ci95'][1]:.2f}, "
+            line = f"{mode_id}: {rate} ({ci}n={n}, errors={errors})"
+            if row["status"] == "incomplete":
+                incomplete = True
+                line += (f"  ⚠ incomplete: {n} graded, {errors} grader errors (needs n ≥ {max(args.min_n, 1)} and ≤ "
+                         f"{args.max_error_rate:.0%} errors); not compared and not used as a reference")
+            elif row["status"] == "no-reference":
+                line += "  no usable earlier window yet; this window can serve as the reference"
+            else:
+                ref = row["reference"]
+                line += (f" vs reference {ref['pass_rate']:.2f} ({ref['windows']} window(s), n={ref['n']}): "
+                         f"Δ {row['delta']:+.2f}, upper bound {row['delta_upper']:+.2f} at {100 * (1 - args.alpha):g}%")
+                if row["status"] == "regression":
+                    regressed = True
+                    line += "  ⚠ regression"
+            print(line)
+    if regressed:
         sys.exit(2)
+    if incomplete:
+        sys.exit(3)
 
 
 if __name__ == "__main__":
