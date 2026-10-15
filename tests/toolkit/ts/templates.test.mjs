@@ -192,10 +192,29 @@ test('runner (TS): app projection, partial usage, configuration resume and porta
 });
 
 test('grouped split: Python and TypeScript use identical case partitions', () => {
-  const dir=project();const records=Array.from({length:36},(_,i)=>({id:'c'+i,group_id:'g'+Math.floor(i/3)}));writeFileSync(join(dir,'records.json'),JSON.stringify(records));
+  // Plain groups, rare labels inside mixed threads, many small strata, partly missing strata, uneven fractions.
+  let x=7;const rand=()=>(x=(x*1103515245+12345)%2147483648)/2147483648;
+  const sets=[{records:Array.from({length:36},(_,i)=>({id:'c'+i,group_id:'g'+Math.floor(i/3)}))}];
+  for(let k=0;k<40;k++){const n=6+Math.floor(rand()*90),groups=3+Math.floor(rand()*(n-3));
+    sets.push({fractions:[[.15,.45,.4],[.4,.3,.3],[1,1,1]][k%3],seed:k,records:Array.from({length:n},(_,i)=>({id:'c'+i,group_id:'g'+Math.floor(rand()*groups),
+      ...[{stratum:rand()<.15?'fail':'pass'},{stratum:'tag'+Math.floor(rand()*6)},{stratum:'u'+i},rand()<.6?{stratum:rand()<.5?'x':'y'}:{}][k%4]}))});}
+  const dir=project();writeFileSync(join(dir,'sets.json'),JSON.stringify(sets));
   copyFileSync(t('eval-grade','templates','grouped-split.ts'),join(dir,'grouped-split.ts'));
-  writeFileSync(join(dir,'check.ts'),`import {groupedSplit} from './grouped-split.ts';import {readFileSync} from 'node:fs';console.log(JSON.stringify(groupedSplit(JSON.parse(readFileSync('records.json','utf8')))));`);
+  writeFileSync(join(dir,'check.ts'),`import {groupedSplit} from './grouped-split.ts';import {readFileSync} from 'node:fs';console.log(JSON.stringify(JSON.parse(readFileSync('sets.json','utf8')).map((s:any)=>groupedSplit(s.records,s.fractions,s.seed))));`);
   const ts=run(tsx,['check.ts'],dir);assert.equal(ts.status,0,ts.stderr);
-  const py=run(process.env.PYTHON || 'python3',['-c',`import sys,json;sys.path.insert(0,${JSON.stringify(t('eval-grade','templates'))});from grouped_split import grouped_split;print(json.dumps(grouped_split(json.load(open('records.json')))))`],dir);assert.equal(py.status,0,py.stderr);
+  const py=run(process.env.PYTHON || 'python3',['-c',`import sys,json;sys.path.insert(0,${JSON.stringify(t('eval-grade','templates'))});from grouped_split import grouped_split;print(json.dumps([grouped_split(s['records'],*([s['fractions'],s['seed']] if 'fractions' in s else [])) for s in json.load(open('sets.json'))]))`],dir);assert.equal(py.status,0,py.stderr);
   assert.deepEqual(JSON.parse(ts.stdout),JSON.parse(py.stdout));
+});
+
+test('validate: Python and TypeScript draw the same stratified splits by default', () => {
+  const dir=project();const annotations={};const traces=[];
+  for(let i=0;i<45;i++){traces.push({trace_id:`t${i}`,thread_id:`th${Math.floor(i/3)}`,input:'q',output:'a'});annotations[`t${i}`]={labels:{window:i%7===0?'fail':'pass'}};}
+  writeJsonl(join(dir,'.eval/default/traces/traces.jsonl'),traces);mkdirSync(join(dir,'.eval/default/review-app'),{recursive:true});
+  writeFileSync(join(dir,'.eval/default/review-app/annotations.json'),JSON.stringify(annotations));
+  copyFileSync(t('eval-grade','templates','validate.ts'),join(dir,'validate.ts'));copyFileSync(t('eval-grade','templates','grouped-split.ts'),join(dir,'grouped-split.ts'));
+  const splits=()=>{const s=JSON.parse(readFileSync(join(dir,'.eval/default/validation/splits.json'),'utf8')).window;return {development:s.development,validation:s.validation,test:s.test};};
+  const ts=run(tsx,['validate.ts','split','--mode','window'],dir);assert.equal(ts.status,0,ts.stderr);const fromTs=splits();
+  const py=run(process.env.PYTHON || 'python3',[t('eval-grade','templates','validate.py'),'split','--mode','window','--force'],dir);assert.equal(py.status,0,py.stderr);
+  assert.deepEqual(splits(),fromTs);
+  for(const ids of Object.values(fromTs))assert.ok(ids.some(i=>Number(i.slice(1))%7===0),'every split holds a fail');
 });

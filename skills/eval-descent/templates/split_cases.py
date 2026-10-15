@@ -1,4 +1,4 @@
-"""Split dataset cases into development, validation, and test once, stratified by tags[0].
+"""Split dataset cases into development, validation, and test once, group-disjoint and stratified by tags[0].
 
     python split_cases.py [--dataset .eval/default/dataset/goldens.jsonl] [--fractions 0.4 0.3 0.3] [--seed 7]
 
@@ -20,9 +20,7 @@ from __future__ import annotations
 
 import argparse
 import json
-import random
 import sys
-from collections import defaultdict
 from pathlib import Path
 
 NAMES = ("development", "validation", "test")
@@ -45,7 +43,10 @@ def main() -> None:
 
     cases = [json.loads(l) for l in Path(args.dataset).read_text(encoding="utf-8").splitlines() if l.strip()]
     from grouped_split import grouped_split
-    split = grouped_split(cases, fractions, args.seed)
+    tagged = any(c.get("tags") for c in cases)  # stratify by tags[0] when the dataset is tagged; untagged cases form one stratum
+    records = [{"id": c["id"], "group_id": c.get("group_id"), "thread_id": c.get("thread_id"),
+                **({"stratum": (c.get("tags") or [""])[0]} if tagged else {})} for c in cases]
+    split = grouped_split(records, fractions, args.seed)
 
     out.mkdir(parents=True, exist_ok=True)
     for name in NAMES:

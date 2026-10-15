@@ -9,6 +9,7 @@
  *
  * Labels: .eval/default/review-app/annotations.json (labels[modeId] = "pass" | "fail").
  * Graders: GRADERS exported from .eval/default/graders/graders.ts.
+ * Splits: development 15% / validation 45% / test 40%, group-disjoint and stratified by label.
  * "Pass" means the failure mode was NOT present; TPR is agreement on passes,
  * TNR is agreement on fails. Shares .eval/default/validation/splits.json with validate.py.
  *
@@ -95,12 +96,16 @@ function split() {
   if (splits[mode!] && !force) fail(`Splits for ${mode} already exist. Splits are fixed once drawn; pass --force only if the labels were redone.`);
   const labels = loadLabels();
   const traces = loadTraces();
-  const out = groupedSplit(Object.keys(labels).map(id=>({id,group_id:(traces.get(id) as any)?.group_id || (traces.get(id) as any)?.thread_id || id})), [.15,.45,.4], Number(arg('--seed','7')));
+  const out = groupedSplit(Object.keys(labels).map(id=>({id,group_id:(traces.get(id) as any)?.group_id || (traces.get(id) as any)?.thread_id || id,stratum:labels[id]})), [.15,.45,.4], Number(arg('--seed','7')));
   splits[mode!] = { ...out, drawn_at: new Date().toISOString(), test_runs: 0 };
   mkdirSync(OUT_DIR, { recursive: true });
   writeFileSync(SPLITS, JSON.stringify(splits, null, 2));
   const describe = (ids: string[]) => `${ids.filter((i) => labels[i] === 'pass').length} pass / ${ids.filter((i) => labels[i] === 'fail').length} fail`;
   console.log(`Splits for ${mode}: development: ${describe(out.development!)}; validation: ${describe(out.validation!)}; test: ${describe(out.test!)}`);
+  const lacking = Object.entries(out).flatMap(([k, ids]) => (['pass', 'fail'] as const).filter((v) => !ids.some((i) => labels[i] === v)).map((v) => `${k} has no ${v} labels`));
+  if (lacking.length) console.log(`Note: ${lacking.join('; ')}. Related traces stay in one split; label more independent examples.`);
+  const fails = Object.values(labels).filter((v) => v === 'fail').length;
+  if (fails < 30 || Object.keys(labels).length - fails < 30) console.log('Note: fewer than ~30 labels of each kind; TPR/TNR will have wide intervals. Label more if you can.');
 }
 
 async function run() {
